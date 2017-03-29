@@ -54,10 +54,10 @@ def server_loop():
 def run_command(command):
     command = command.rstrip()
     try:
-	output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+    	output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
     except:
-	output = "Failed to execute the command\r\n"
-    return output
+	    output = "Failed to execute the command\r\n"
+        return output
 
 def client_handler(client_socket):
     
@@ -77,7 +77,8 @@ def client_handler(client_socket):
                 file_descriptor.close()
 
                 client_socket.send("File saved in %s\r\n" % globals.upload_destination)
-            except: client_socket.send("Failed to save file to %s\r\n" % globals.upload_destination)
+            except: 
+                client_socket.send("Failed to save file to %s\r\n" % globals.upload_destination)
 
     if len(globals.execute):
         output = run_command(globals.execute)
