@@ -4,7 +4,7 @@ import socket
 import getopt
 import threading
 import subprocess
-import client_sender
+import client_server
 
 listen = False
 command = False
@@ -69,10 +69,9 @@ def main():
 	if not listen and len(target) and port > 0:
 	    buffer = sys.stdin.read()
 
-            client_sender(buffer, target, port)
+            client_sender(buffer)
 
 	if listen:
 	    server_loop()
-
 
 main()
