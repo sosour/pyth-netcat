@@ -57,7 +57,7 @@ def run_command(command):
     	output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
     except:
 	    output = "Failed to execute the command\r\n"
-        return output
+    return output
 
 def client_handler(client_socket):
     
