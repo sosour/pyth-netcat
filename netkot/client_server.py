@@ -18,7 +18,6 @@ def client_sender(buffer):
 
             while recv_len:
                 data = client.recv(4096)
-                print data
                 recv_len = len(data)
                 response += data
 
@@ -48,8 +47,6 @@ def server_loop():
 
     while True:
         client_socket, addr = server.accept()
-        print client_socket
-        print addr
         client_thread = threading.Thread(target=client_handler, args=(client_socket,))
         client_thread.start()
 
@@ -88,11 +85,10 @@ def client_handler(client_socket):
 
     if globals.command:
         while True:
-            client_socket.send("<NETKOT:#>")
+            client_socket.send("<NETKOT:#> ")
             cmd_buffer = ""
             while "\n" not in cmd_buffer:
                 cmd_buffer += client_socket.recv(1024)
 
             response = run_command(cmd_buffer)
-            print "Sending response"
             client_socket.send(response)
