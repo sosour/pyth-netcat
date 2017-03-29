@@ -2,6 +2,7 @@
 import socket
 import threading
 import globals
+import subprocess
 
 def client_sender(buffer):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -52,10 +53,11 @@ def server_loop():
 
 def run_command(command):
     command = command.rstrip()
+    print command
     try:
-    	output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+        output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
     except:
-	    output = "Failed to execute the command\r\n"
+        output = "Failed to execute the command\r\n"
     return output
 
 def client_handler(client_socket):
