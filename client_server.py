@@ -1,9 +1,11 @@
-#!/usr/bin/python
+#!/usr/bin/pyton
+import socket
+import globals
 
 def client_sender(buffer):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-	client.connect((target,port))
+	client.connect((globals.target, globals.port))
 	if len(buffer):
 	    client.send(buffer)
 
@@ -35,15 +37,14 @@ def client_sender(buffer):
 
 
 def server_loop():
-    global target
 
-    if not len(target):
-        target = "0.0.0.0"
+    if not len(globals.target):
+        globals.target = "0.0.0.0"
 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((target, port))
+    server.bind((globals.target, globals.port))
     server.listen(5)
-
+    print "Listening on %s:%s" % (globals.target, str(globals.port))
 
     while True:
 	client_socket, addr = server.accept()
@@ -60,11 +61,8 @@ def run_command(command):
     return output
 
 def client_handler(client_socket):
-    global uplaod
-    global execute
-    global command
     
-    if len(upload_destination):
+    if len(globals.upload_destination):
             file_buffer = ""
 
             while True:
@@ -75,18 +73,18 @@ def client_handler(client_socket):
                 else:
                     file_buffer += data
             try:
-                file_descriptor = open(upload_destination, "wb")
+                file_descriptor = open(globals.upload_destination, "wb")
                 file_descriptor.write(file_buffer)
                 file_descriptor.close()
 
-                client_socket.send("File saved in %s\r\n" % upload_destination)
-            except: client_socket.send("Failed to save file to %s\r\n" % upload_destination)
+                client_socket.send("File saved in %s\r\n" % globals.upload_destination)
+            except: client_socket.send("Failed to save file to %s\r\n" % globals.upload_destination)
 
-    if len(execute):
-        output = run_command(execute)
+    if len(globals.execute):
+        output = run_command(globals.execute)
         client_socket.send(output)
 
-    if command:
+    if globals.command:
         while True:
             client_socket.send("NETKOT:# ")
             cmd_buffer = ""
