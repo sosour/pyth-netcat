@@ -1,39 +1,38 @@
 #!/usr/bin/pyton
 import socket
+import threading
 import globals
 
 def client_sender(buffer):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-	client.connect((globals.target, globals.port))
-	if len(buffer):
-	    client.send(buffer)
+        client.connect((globals.target, globals.port))
+        if len(buffer):
+            client.send(buffer)
 
-	while True:
+	    while True:
 
-	    recv_len = 1
-	    response = ""
+	        recv_len = 1
+	        response = ""
 
-	    while recv_len:
+	        while recv_len:
 
-		data = client.recv(4096)
-		recv_len = len(data)
-		response += data
+		        data = client.recv(4096)
+		        recv_len = len(data)
+		        response += data
 
-		if recv_len < 4096:
-		    break
+		        if recv_len < 4096:
+		            break
 
-	    print response,
-
-	    buffer = raw_input("")
-	    buffer += "\n"
-
-	    client.send(buffer)
+            print response
+            buffer = raw_input("")
+            buffer += "\n"
+            client.send(buffer)
 
     except:
-	print "Exception! Closing"
+	    print "Exception! Closing"
 	
-	client.close()
+	    client.close()
 
 
 def server_loop():
@@ -47,10 +46,10 @@ def server_loop():
     print "Listening on %s:%s" % (globals.target, str(globals.port))
 
     while True:
-	client_socket, addr = server.accept()
+	    client_socket, addr = server.accept()
 
-	client_thread = threading.Thread(target=client_handler, args=(client_socket,))
-	client_thread.start()
+	    client_thread = threading.Thread(target=client_handler, args=(client_socket,))
+	    client_thread.start()
 
 def run_command(command):
     command = command.rstrip()
@@ -85,6 +84,7 @@ def client_handler(client_socket):
         client_socket.send(output)
 
     if globals.command:
+        print "Im here"
         while True:
             client_socket.send("NETKOT:# ")
             cmd_buffer = ""
