@@ -48,7 +48,7 @@ def main():
         elif o in ("-p", "--port"):
             globals.port = int(a)
         elif o in ("-c", "--command"):
-      	    globals.command = a
+      	    globals.command = True
         elif o in ("-u","--upload"):
             globals.upload_destination = a
         else:
