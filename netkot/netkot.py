@@ -18,10 +18,10 @@ def usage():
     print
     print
     print "Example usage:"
-    print "netkot.py 192.168.0.1:9999 -l -c"
-    print "netkot.py 192.168.0.1:9999 -l -u=C://target.exe"
-    print "netkot.py 192.168.0.1:9999 -l -e \"cat /etc/passwd\""
-    print "echo 'ABCDEFGHI' | ./netkot.py -t 192.168.11.12:135"
+    print "netkot.py -t 192.168.0.1 -p 9999 -l -c"
+    print "netkot.py -t 192.168.0.1 -p 9999 -l -u=C://target.exe"
+    print "netkot.py -t 192.168.0.1 -p 9999 -l -e \"cat /etc/passwd\""
+    print "echo 'ABCDEFGHI' | ./netkot.py -t 192.168.11.12 -p 135"
     sys.exit(0)
 
 def main():
